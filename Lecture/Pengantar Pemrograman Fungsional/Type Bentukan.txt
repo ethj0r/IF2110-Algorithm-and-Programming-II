@@ -1,0 +1,86 @@
+____________________________________________________________________
+
+TYPE POINT
+
+DEFINISI TYPE
+type point: <x: real, y: real>
+    {<x,y> adalah sebuah point, dengan x adalah absis dan y adalah ordinat}
+
+DEFINISI DAN SPESIFIKASI SELEKTOR
+Absis: po
+
+DEFINISI DAN SPESIFIKASI KONSTRUKTOR
+
+DEFINISI DAN SPESIFIKASI PREDIKAT
+
+DEFINISI OPERATOR/FUNGSI LAIN TERHADAP POINT
+
+REALISASI
+
+
+____________________________________________________________________
+
+TYPE PECAHAN
+
+DEFINISI TYPE
+
+DEFINISI DAN SPESIFIKASI SELEKTOR
+
+DEFINISI DAN SPESIFIKASI KONSTRUKTOR
+
+DEFINISI DAN SPESIFIKASI OPERATOR TERHADAP PECAHAN
+
+DEFINISI DAN SPESIFIKASI PREDIKAT
+
+REALISASI
+
+____________________________________________________________________
+
+TYPE DATE
+
+DEFINISI DAN SPESIFIKASI TYPE
+
+DEFINISI DAN SPESIFIKASI SELEKTOR
+
+DEFINISI DAN SPESIFIKASI KONSTRUKTOR
+
+DEFINISI DAN SPESIFIKASI OPERATOR TERHADAP DATE
+
+DEFINISI DAN SPESIFIKASI OPERATOR TERHADAP DATE
+
+DEFINISI DAN SPESIFIKASI PREDIKAT
+
+REALISASI
+
+
+        if (isKabisat(Year(date))) then
+
+
+
+
+NextDate                                                                        NextDate(date)
+
+DEFINISI & SPESIFIKASI
+NextDate: date -> date
+    {menerima masukan date dan mengembalikan date setelahnya}
+
+REALISASI
+    NextDate (date) =
+        let d = Day(date)
+        in
+            let m = Month(date)
+            in
+                let y = Year(date)
+                in
+                    depend on (d, m, y):
+                        m=1 or m=3 or m=5 or m=7 or m=8 or m=10 or m=12     :
+                            if (d < 31) then <d+1, m, y> else (if m != 12 then <d,m+1,y> else <1,1,y+1>)
+                        m=4 or m=6 or m=9 or m=11                           :
+                            if (d < 30) then <d+1,m,y>
+                            else <1,m+1,y>
+                        m = 2                                               :
+                            if (isKabisat(y)) then
+                                if (d < 29) then <d+1,m,y> else <1,m+1,y>
+                            else
+                                if (d < 28) then <d+1,m,y> else <1,m+1,y>
+        

@@ -1,0 +1,49 @@
+
+
+
+________________________________________________________________
+
+isMember                isMember(X, P)
+
+DEFINISI DAN SPESIFIKASI
+isMember: elemen, PohonBiner -> boolean
+    {isMember(X,P) true jika ada elemen di P yang bernilai X}
+
+REALISASI
+isMember(X, P) :
+    if (IsTreeEmpty(P)) then false
+    else if (Akar(P) == X) then true
+    else
+        isMember(X, Left(P)) || isMember(X, Right(P))
+
+________________________________________________________________
+
+IsSkewLeft              IsSkewLeft(P)
+
+DEFINISI DAN SPESIFIKASI
+IsSkewLeft: PohonBiner -> boolean
+    {IsSkewLeft(P) menghasilkan true jika P adalah pohon
+     yang condong ke kiri.}
+
+REALISASI
+IsSkewLeft(P):
+    if (IsTreeEmpty(P)) then false {basis}
+    else if (IsExistRight(P)) then false {basis}
+    else if (IsUnerLeft(P)) then IsSkewLeft(Left P) {rekurens}
+    else true
+________________________________________________________________
+
+SumPos                  SumPos(P)
+
+DEFINISI DAN SPESIFIKASI
+SumPos: PohonBiner -> integer
+    {SumPos(P) menghasilkan integer yang merupakan penjumlahan
+     dari semua elemen P yang bernilai positif}
+
+REALISASI
+SumPos(P) :
+    if (IsTreeEmpty(P)) then 0
+    else if (Akar(P) >= 0) then
+        Akar(P) + SumPos(Left(P)) + SumPos(Right(P))
+    else
+        SumPos(Left(P)) + SumPos(Right(P))

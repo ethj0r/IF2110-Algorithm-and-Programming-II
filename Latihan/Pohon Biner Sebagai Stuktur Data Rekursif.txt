@@ -1,0 +1,123 @@
+LevelOfX                LevelOfX(X, P)
+
+DEFINISI DAN SPESIFIKASI
+LevelOfX : elemen, PohonBiner -> integer >= 0
+     { LevelOfX (X,P) menghasilkan nilai level dari suatu elemen X dari pohon P. Akar dari P dihitung mempunyai level 1. 
+       Elemen X mungkin tidak ditemukan dalam P, jika tidak ditemukan maka mengembalikan 0.
+       Prekondisi: pohon P mungkin kosong, elemen-elemen pohon P unik.}
+
+REALISASI
+    if (isTreeEmpty(P)) then 0
+    else if (Akar(P) == X) then 1
+    else
+        let lk = LevelOfX(X, Left(P))
+            rk = LevelOfX(X, Right(P))
+            in
+                if (lk != 0) then lk + 1
+                else if (rk != 0) then rk + 1
+                else 0
+
+
+_______________________________________________________________
+
+LevelMax            LevelMax(P)
+
+DEFINISI DAN SPESIFIKASI
+LevelMax : PohonBiner -> integer >= 0
+     { LevelMax(P) menghasilkan nilai level maksimum (daun terbawah) dari pohon biner P. 
+       Akar dari P dihitung mempunyai level 1. Jika pohon kosong mengembalikan 0. } 
+
+REALISASI
+    LevelMax p
+        | isTreeEmpty(P)    : 0
+        | isOneElmt(P)      : 1
+        | isBiner(P)        : let lk = LevelMax(Left(P))
+                                  rk = LevelMax(Right(P))
+                                  in
+                                    if (lk > rk) then 1 + lk else 1 + rk
+        | isUnerLeft(P)     : 1 + LevelMax(Left(P))
+        | isUnerRight(P)    : 1 + LevelMax(Right(P))
+        | otherwise         : 0
+
+_______________________________________________________________
+
+MakeListPos        MakeListPos(P)
+
+DEFINISI DAN SPESIFIKASI
+MakeListPos : PohonBiner -> List of Integer
+     { MakeListPos(P) menghasilkan list of integer yang berisi elemen-elemen P yang bernilai positif. 
+       Urutan penulisan adalah preorder: akar, pohon kiri, dan pohon kanan. }
+
+REALISASI
+    MakeListPos P
+        | isTreeEmpty(P)    : []
+        | Akar(P) >=  0     : konsLo(Akar(P), konsLo((MakeListPos(Left(P))), (MakeListPos(Right(P)))))
+        | otherwise         : konsLo(MakeListPos(Left(P)), MakeListPos(Right(P)))
+
+_______________________________________________________________
+
+MakeListParent      MakeListParent(X, P)
+
+DEFINISI DAN SPESIFIKASI
+MakeListParent : elemen, PohonBiner -> List of Integer
+     { MakeListParent(X,P) menghasilkan list of integer yang berisi semua bapak dari sebuah elemen X.
+       Prekondisi: pohon tidak kosong, X selalu merupakan member di P, elemen-elemen pohon P unik }
+
+REALISASI
+    MakeListParent(X, P) :
+        if (Akar(P) = X) then []
+        else if (isMember(X, Left(P))) then 
+            konsLo(Akar(P), MakeListParent(X, Left(P)))
+        else
+            konsLo(Akar(P), MakeListParent(X, Right(P)))
+
+_______________________________________________________________
+
+
+MakeBinTree         MakeBinTree(A, L, R)
+
+DEFINISI DAN SPESIFIKASI
+MakeBinTree : elemen, PohonBiner, PohonBiner -> PohonBiner
+    {Membuat binary tree baru berdasarkan masukan elemen, dan 2 pohon biner left dan right.
+     penulisan prefix}
+
+REALISASI
+    MakeBinTree(A, L, R) = Node (A, L, R)
+_______________________________________________________________
+
+
+AddDaunKiri         AddDaunKiri(P, X)
+
+DEFINISI DAN SPESIFIKASI
+AddDaunKiri : PohonBiner, elemen -> PohonBiner
+     { AddDaunTerkiri(P,X) menghasilkan pohon biner P yang telah bertambah simpulnya
+       dengan X sebagai simpul daun “terkiri” }
+
+REALISASI
+    AddDaunKiri(P, X) :
+        if (isTreeEmpty(P)) then
+            MakeBinTree(X, _, _)
+        else
+            MakeBinTree(Akar(P), (AddDaunKiri(Left(P))), (Right(P)))
+
+_______________________________________________________________
+
+DelDaunTerkiri      DelDaunTerkiri(P)
+
+DEFINISI DAN SPESIFIKASI
+DelDaunTerkiri : PohonBiner tidak kosong -> <PohonBiner, elemen>
+     { DelDaunTerkiri(P) menghasilkan tuple <P’,X> dengan P’ adalah pohon biner P yang
+       sudah dihapus daun “terkiri”-nya, dan X adalah elemen daun yang dihapus }
+
+REALISASI
+    DelDaunTerkiri(P) :
+        if (isOneElmt(P))
+            then < _, Akar(P) >
+        else if (isExistLeft(P)) then
+            let < L', X > = DelDaunTerkiri(Left(P))
+            in
+                < MakeBinTree(Akar(P), L', Right(P)), X >
+        else
+            let < R', X > = DelDaunTerkiri(Right(P))
+            in
+                < MakeBinTree(Akar(P), Left(P), R'), X >

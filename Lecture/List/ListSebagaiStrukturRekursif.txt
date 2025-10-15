@@ -1,0 +1,56 @@
+isMember1   : elemen, List -> boolean
+{}
+REALISASI
+isMember1(x, L) : 
+    if isEmpty(L) then false
+    else if firstElmt(L) = x then true
+    else isMember1(x, Tail(L))
+
+isMember2   : elemen, List -> boolean
+{}
+REALISASI
+isMember2(x, L) : 
+    if isEmpty(L) then false
+    else if LastElmt(L) = x then true
+    else isMember2(x, Head(L))
+
+____________________________________________________________________
+
+Copy    : List -> List
+    {copy(L) menyalin satu per satu elemen L untuk membentuk List baru hasil copy}
+
+REALISASI (versi 1)
+Copy(L) :
+    if isEmpty(L) then []                       {basis}
+    else Konso(firstElmt(L), Copy(Tail(L)))     {rekurens}
+
+REALISASI (versi 2)
+Copy(L) :
+    if isEmpty(L) then []                       {basis}
+    else KonsDot(Copy(Head[L]), LastElmt(L))    {rekurens}
+
+____________________________________________________________________
+
+isEqual : 2 List -> boolean
+{ isEqual l1 l2 true jika semua elemen list l1 sama dengan l2: sama
+urutan dan sama nilai per elemen pada posisi yang sama }
+
+REALISASI
+isEqual(L1, L2) :
+    depend on L1, L2
+        ifEmpty(L1) and isEmpty(L2)         : true
+        isEmpty(L1) and not isEmpty(L2)     : false
+        not isEmpty(L1) and isEmpty(L2)     : false
+        not isEmpty(L1) and not isEmpty(L2) :
+            (firstElmt(L1) = firstElmt(L2) and then isEqual(Tail(L1), Tail(L2)))
+
+____________________________________________________________________
+
+Konkat  : 2 List -> List
+{ Konkat(L1,L2) menghasilkan konkatenasi L1 dan L2
+dengan list L2 "sesudah" list L1 }
+
+REALISASI
+Konkat(L1, L2)  :
+    if isEmpty(L1) then L2                  {basis}
+    else Konso(firstElmt(L1), Konkat(Tail(L1), L2))

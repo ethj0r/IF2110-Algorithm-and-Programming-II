@@ -1,0 +1,72 @@
+1. 
+
+DeretSegitiga           DeretSegitiga(n)
+DEFINISI DAN SPESIFIKASI
+DeretSegitiga   : integer -> integer
+    {menerima masukan sebuah integer n dan mencari serta mengembalikan
+     bilangan ke-n pada deret segitiga}
+REALISASI
+DeretSegitiga(n) :
+    if (n = 1) then 1
+    else n + DeretSegitiga(n-1)
+
+2.
+
+isGanjil                isGanjil(n)
+DEFINISI DAN SPESIFIKASI
+isGanjil        : integer -> boolean
+    {menerima masukan sebuah integer n dan true jika bilangan
+     tersebut ganjil, false jika genap}
+REALISASI
+isGanjil(n) :
+    if (n = 0) then 0
+    else if (n = 1) then 1
+    else isGanjil(n-2)
+
+3.
+
+LuasBS                  LuasBS(s)
+DEFINISI DAN SPESIFIKASI
+LuasBS          : real -> real
+    {mengitung serta mengembalikan luas bujur sangkar dengan masukan
+     panjang sisi s real}
+REALISASI
+LuasBS(n) :
+    if (s = 0) then 0
+    else LuasBS(s-1) + s + (s-1)
+4.
+
+SumOfDigits             SumOfDigits(n)
+DEFINISI DAN SPESIFIKASI
+SumOfDigits     : integer -> integer
+    {mengitung hasil penjumlahan dari setiap bilangan tunggal yang terdapat
+     di dalam sebuah bilangan integer positif n}
+REALISASI
+SumOfDigits(n) :
+    if (n < 10) then n
+    else (n mod 10) + SumOfDigits(n div 10)
+
+SumOfDigitsPosNeg       SumOfDigitsPosNeg(n)
+DEFINISI DAN SPESIFIKASI
+SumOfDigitsPosNeg   : integer -> integer
+    {menerima sebuah bilangan integer n (positif maupun negatif)
+     dan mengembalikan jumlah dari seluruh penyusun bilangan}
+REALISASI
+SumOfDigitsPosNeg(n) :
+    depend on n
+        n < 0       : SumOfDigitsPosNeg(abs(n))
+        n < 10      : n
+        otherwise   : (n mod 10) + SumOfDigitsPosNeg(n div 10)
+
+5.
+
+sumRange                sumRange(n, m)
+DEFINISI DAN SPESIFIKASI
+sumRange    : integer, integer -> integer
+    {menerima masukan 2 buah integer n dan m yang menyatakan rentang bilangan
+     dengan syarat n <= m; n dan m bilangan positif dan menghasilkan
+     penjumlahan semua bilangan n sampai dengan m}
+REALISASI
+sumRange(n,m)   :
+    if (n = m) then m
+    else n + sumRange(n+1, m)

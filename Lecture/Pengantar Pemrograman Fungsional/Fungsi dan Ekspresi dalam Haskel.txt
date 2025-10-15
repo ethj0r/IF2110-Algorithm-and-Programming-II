@@ -1,0 +1,66 @@
+____________________________________________________________________
+
+Template Notasi Fungsional
+
+JUDUL                       Nama-fungsi (list-parameter-formal)
+DEFINISI & SPESIFIKASI
+Nama-fungsi: domain -> range
+    {tuliskan spesifikasi fungsi dengan nama, domain, dan range
+    yang disebutkan}
+
+REALISASI
+    Nama-fungsi (list-parameter): <ekspresi-fungsional>
+
+APLIKASI
+=> Nama-fungsi (list-parameter-aktual)
+=> Nama-fungsi (list-parameter-aktual)
+=> Nama-fungsi (list-parameter-aktual)
+
+____________________________________________________________________
+
+Contoh
+-- Pangkat2 - fx2 (x)
+-- Definisi dan Spesifikasi
+fx2 :: Int -> Int
+    -- fx2 (x) menghitung pangkat dua dari x,
+    -- sebuah bilangan integer
+-- Realisasi
+fx2 (x) = x * x
+
+-- contoh aplikasi 
+fx2 2                   ATAU fx2 (2)
+____________________________________________________________________
+
+nilaiTengah         nilaliTengah(a,b,c)
+nilaiTengah: integer -> integer -> integer -> integer
+    {menerima 3 buah integer a, b, dan c yang berlainan dan mengembalikan nilai tengah bila diurutkan}
+    {min3(a,b,c) dan max(a,b,c) sebagai fungsi antara}
+
+Realisasi
+    nilaiTengah (a, b, c) : 
+        depend on (a, b, c) :
+            (min3(a,b,c) = a and max3(a,b,c) = b) : c
+            (min3(a,b,c) = a and max3(a,b,c) = c) : b
+            (min3(a,b,c) = b and max3(a,b,c) = a) : c
+            (min3(a,b,c) = b and max3(a,b,c) = c) : a
+            (min3(a,b,c) = c and max3(a,b,c) = a) : b
+            (min3(a,b,c) = c and max3(a,b,c) = b) : a
+
+____________________________________________________________________
+
+nilaiTengah         nilaliTengah(a,b,c)
+nilaiTengah: integer -> integer -> integer -> integer
+    {menerima 3 buah integer a, b, dan c yang berlainan dan mengembalikan nilai tengah bila diurutkan}
+    {min3(a,b,c) dan max(a,b,c) sebagai fungsi antara}
+
+Realisasi
+    nilaiTengah (a, b, c) : 
+    let min3(a,b,c)
+    in
+        let max = max3(a,b,c)
+        in
+            a+b+c -(min+max)
+____________________________________________________________________
+
+
+

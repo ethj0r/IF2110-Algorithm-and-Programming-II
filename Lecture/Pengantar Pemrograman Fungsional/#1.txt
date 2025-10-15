@@ -1,0 +1,11 @@
+isJamValid(j,m,d) : -> (j >= 0 and j <= 23) and (m >= 0 and m <= 59) and (d >= 0 and d <= 59)
+
+
+
+
+sumDetik(j,m,d)
+DEFINISI DAN SPESIFIKASI
+    sumDetik: integer, integer, integer -> integer
+    {menerima nilai integer j, m, d, kemudian mengembalikan total detik}
+REALISASI
+    sumDetik(j, m, d) : (j*3600) + (m*60) + d

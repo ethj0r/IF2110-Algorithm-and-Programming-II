@@ -1,0 +1,27 @@
+
+1.
+DEFINISI DAN SPESIFIKASI
+    coinConversion: integer, integer, integer, integer -> <integer, integer>
+    {menerima input integer sejumlah koin quarter, dime, nickel, dan penny,
+     lalu mengembalikan pasangan <dollar, sen> yang setara nilainya}
+
+REALISASI
+    coinConversion(quarter, dime, nickel, penny) :
+                < ((25*quarter + 10*dime + 5*nickel + penny) div 100), ((25*quarter + 10*dime + 5*nickel + penny) mod 100) >
+
+PENERAPAN
+    coinConversion(8, 20, 30, 77) = <6, 27>
+
+
+
+2.
+REALISASI
+    isLeapYear(y) = (y mod 400 = 0) or ((y mod 4 = 0) and (y mod 100 ≠ 0))
+
+    isDateValid(d, m, y) =
+        (m >= 1) and (m <= 12) and (d >= 1) and (y >= 1) and
+        depends on m:
+            m=1 or m=3 or m=5 or m=7 or m=8 or m=10 or m=12     : d <= 31
+            m=4 or m=6 or m=9 or m=11                           : d <= 30
+            m = 2                                               : d <= (if isLeapYear(y) then 29 else 28)
+            else

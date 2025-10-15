@@ -1,0 +1,152 @@
+1.
+
+Translasi               Translasi(P, dx, dy)
+
+DEFINISI DAN SPESIFIKASI
+Translasi: point, real, real -> point
+    {menghasilkan point baru hasil translasi titik P
+    sejauh dx pada sumbu x dan dy pada sumbu y}
+
+REALISASI
+Translasi(P, dx, dy) = MakePoint(Absis(P)+dx, Ordinat(P)+dy)
+
+
+2.
+
+KuadranPrePostTranslasi     KuadranPrePostTranslasi(P, dx, dy)
+
+DEFINISI DAN SPESIFIKASI
+KuadranPrePostTranslasi: point, real, real -> <integer, integer>
+    {KuadranPrePostTranslasi(P, dx, dy) menghasilkan tuple <K1, K2>.
+     K1 adalah kuadran dari P, sedangkan K2 adalah kuadran dari P 
+     setelah Translasi(P, dx, dy).}
+
+REALISASI
+    KuadranPrePostTranslasi(P, dx, dy) = 
+        let P_after = Translasi(P, dx, dy)
+        in
+            <Kuadran(P), Kuadran(P_after)>
+
+3.
+Dengan definisi baru:
+type pecahan : <n: integer, d: integer > 0>
+
+(penyebut selalu positif, tanda negatif hanya di pembilang), tidak ada realisasi fungsi/predikat yang perlu diubah.
+Alasannya: semua fungsi/predikat (AddP, SubP, MulP, DivP, RealP, IsEqP?, IsLtP?, IsGtP?) tetap valid karena
+rumus aritmatika pecahan tidak bergantung pada tanda pembilang,
+penyebut selalu positif sehingga perhitungan dan perbandingan konsisten,
+jika pembilang negatif, hasil otomatis negatif tanpa perlu modifikasi tambahan.
+
+
+4.
+
+type Point : <x : real , y : real>
+{<x,y> adalah sebuah titik dengan absis x dan ordinat y}
+
+type Garis : <PAw : Point , PAkh : Point>
+{<PAw,PAkh> adalah sebuah garis dengan PAw titik awal dan PAkh titik akhir}
+
+____________________________________________________________________
+
+panjangGaris            panjangGaris(G)
+DEFINISI DAN SPESIFIKASI
+panjangGaris    : Garis -> real
+    {panjangGaris(G) menghasilkan panjang garis G yang dihitung sebagai jarak
+     antara titik awal dan titik akhir}
+REALISASI
+panjangGaris(G) = Jarak(PAw(G), PAkh(G))
+
+____________________________________________________________________
+
+Gradien                 Gradien(G)
+DEFINISI DAN SPESIFIKASI
+Gradien(G)      : Garis -> real
+    {menghasilkan gradien garis G dengan syarat
+     Absis(PAw(G)) != Absis(PAkh(G))}
+REALISASI
+Gradien(G) = (Ordinat(PAkh(G)) - Ordinat(PAw(G))) / (Absis(PAkh(G)) - (Absis(PAw(G))))
+
+____________________________________________________________________
+
+titikPotongSumbuX       titikPotongSumbuX(G)    
+DEFINISI DAN SPESIFIKASI
+titikPotongSumbuX : garis → point
+    {menghasilkan titik potong garis G dengan sumbu X, jika ada}
+REALISASI
+    let x0 = Absis(PAw(G)) – Ordinat(PAw(G))/Gradien(G)
+    in
+        titikPotongSumbuX(G) = MakePoint(x0, 0)
+
+____________________________________________________________________
+
+titikPotongSumbuY       titikPotongSumbuY(G)
+DEFINISI DAN SPESIFIKASI
+titikPotongSumbuY : garis → point
+    {menghasilkan titik potong garis G dengan sumbu Y, jika ada}
+REALISASI
+titikPotongSumbuY(G) = MakePoint(0, Ordinat(PAw(G)) – Gradien(G)*Absis(PAw(G)) )
+
+____________________________________________________________________
+
+translasiGaris          translasiGaris(G, dx, dy)
+DEFINISI DAN SPESIFIKASI
+translasiGaris  : Garis, real, real -> Garis
+    {menghasilkan garis baru hasil translasi seluruh titik pada garis G sejauh dx
+     pada sumbu x dan dy pada sumbu y}
+REALISASI
+translasiGaris(G, dx, dy) = MakeGaris
+
+____________________________________________________________________
+
+APAKAH INI LEBIH KE PREDIKAT???? 
+
+isTegakLurus            isTegakLurus(G1, G2)
+DEFINISI DAN SPESIFIKASI
+isTegakLurus    : Garis, Garis -> boolean
+    {true jika G1 tegak lurus dengan G2}
+REALISASI
+isTegakLurus(G1, G2) = (Gradien(G1) * Gradien(G2) = -1)
+
+____________________________________________________________________
+
+isSejajar               isSejajar(G1, G2)
+DEFINISI DAN SPESIFIKASI
+isSejajar       : Garis, Garis -> boolean
+    {true jika G1 sejajar dengan G2}
+REALISASI
+isSejajar(G1, G2) = (Gradien(G1) = Gradien(G2))
+
+5.
+
+TYPE JAM
+
+DEFINISI DAN SPESIFIKASI TYPE
+type JAM : <JJ: integer [0..23], MM: integer [0..59], SS: integer [0..59]>
+{<JJ,MM,SS> adalah sebuah waktu valid dengan JJ = jam, MM = menit, SS = detik}
+
+Jam   : JAM → integer [0..23]
+{Jam(J) memberikan komponen jam dari J}
+
+Menit : JAM → integer [0..59]
+{Menit(J) memberikan komponen menit dari J}
+
+Detik : JAM → integer [0..59]
+{Detik(J) memberikan komponen detik dari J}
+
+DEFINISI DAN SPESIFIKASI OPERATOR YANG MUNGKIN BERLAKU PADA TYPE JAM
+JAMToDetik : JAM → integer
+{JAMToDetik(J) menghitung jumlah detik dari 00:00:00 sampai JAM J}
+
+DetikToJAM : integer → JAM
+{DetikToJAM(N) mengubah jumlah detik sejak 00:00:00 menjadi sebuah JAM 
+dengan domain jam [0..23], menit [0..59], detik [0..59]}
+
+NextDetik : JAM → JAM
+{NextDetik(J) menghasilkan JAM satu detik setelah J, memperhitungkan perubahan menit dan jam}
+
+PrevDetik : JAM → JAM
+{PrevDetik(J) menghasilkan JAM satu detik sebelum J, memperhitungkan perubahan menit dan jam}
+
+Durasi : JAM × JAM → integer
+{Durasi(J1,J2) menghitung selisih waktu dalam detik antara J1 dan J2, dengan asumsi J2 ≥ J1}
+

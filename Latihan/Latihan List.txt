@@ -1,0 +1,159 @@
+1.
+countFactorOfX          countFactorOfX(n, l)
+DEFINISI DAN SPESIFIKASI
+countFactorOfX  : Integer -> List of Integer -> Integer
+    {countFactorOfX(n, l) mengembalikan banyaknya kemunculan bilangan
+     yang merupakan faktor dari n pada l}
+REALISASI
+    countFactorOfX(n, l) :
+        if (isEmpty(l)) then 0                                                  {basis}
+        else if (firstElmt mod n = 0) then 1 + countFactorOfX(n, Tail(l))       {rekurens}
+            else countFactorOfX(Tail(l))
+
+
+delNthElmt              delNthElmt(n, l)
+DEFINISI DAN SPESIFIKASI
+delNthElmt  : Integer -> List of Integer -> List of Character
+    {delNthElmt(n, l) menghilangkan elemen ke-n dari l.
+     Asumsi: n lebih kecil atau sama dengan jumlah elemen l; l tidak kosong.}
+REALISASI
+    delNthElmt(n, l) :
+        if (isEmpty(l)) then []     {basis}
+        else if (n = 1) then Tail(l)
+        else konso (firstElmt(l), delNthElmt(n-1, Tail(l))) {rekurens}
+
+
+2.
+sumIsiList              sumIsiList(l)
+DEFINISI DAN SPESIFIKASI
+sumIsiList  : List of Integer -> Integer
+    {sumIsiList(l) menghitung hasil penjumlahan dari seluruh elemen sebuah list
+     of integer l yang tidak kosong}
+REALISASI
+    sumIsiList(l) :
+        if (isEmpty(l)) then 0                      {basis}
+        else (firstElmt(l) + sumIsiList(Tail(l)))   {rekurens}
+
+
+filterGanjil            filterGanjil(l)   
+DEFINISI DAN SPESIFIKASI
+filterGanjil    : List of Integer -> List of Integer
+    {filterGanjil(l) melakukan filtering terhadap sebuah List of Integer l
+     menghasilkan list dengan elemen yang hanya terdiri atas bilangan ganjil
+     yang muncul dalam l. Diasumsikan semua elemen l adalah bilangan integer positif
+     atau 0. l mungkin kosong}
+REALISASI
+    filterGanjil(l) :
+        if (isEmpty(l)) then [] {basis}
+        else if (firstElmt(l) mod 2 != 0) then konso(firstElmt(l), filterGanjil(Tail(l))) {rekurens}
+            else filterGanjil(Tail(l))
+
+
+3.
+isEqFront               isEqFront(t1, t2)
+DEFINISI DAN SPESIFIKASI
+isEqFront   : 2 List of Character -> Boolean
+    {isEqFront(t1, t2) menghasilkan true jika potongan awal list t2 mengandung t1
+     (dengan panjang dan urutan karakter yang sama)}
+REALISASI
+    isEqFront(t1, t2) :
+        if (isEmpty(t1)) then true      {basis}
+        else if (firstElmt(t1) != firstElmt(t2)) then false
+        else isEqFront(Tail(t1), Tail(t2))          {rekurens}    
+
+4.
+isOrdered               isOrdered(l)
+DEFINISI DAN SPESIFIKASI
+isOrdered   : List of Integer -> Boolean
+    {isOrdered(l) menghasilkan true jika elemen-elemen pada l terurut membesar, false jika tidak}
+REALISASI
+    isOrdered(l) :
+        if (isEmpty(l) or isOneElmt(l)) then true
+        else if (firstElmt(l) > firstElmt(Tail(l))) then false
+        else isOrdered(Tail(l))
+
+5.
+mergeList               mergeList(l1, l2)
+DEFINISI DAN SPESIFIKASI
+mergeList   : 2 List of Integer -> List of Integer
+    {mergeList(l1, l2) menghasilkan List of Integer yang merupakan hasil penggabungan l1 dan l2,
+     dan tetap terurut membesar. prekondisi: l1 dan l2 adalah list terurut membesar dan mungking kosong}
+REALISASI
+    mergeList(l1, l2)
+        | isEmpty(l1) && isEmpty(l2)    : []
+        | isEmpty l1                    : l2
+        | isEmpty l2                    : l1
+        | firstElmt(l1) < firstElmt(l2) : konso(firstElmt(l1), mergeList(Tail(l1), l2))
+        | otherwise                     : konso(firstElmt(l2), mergeList(l1, Tail(l2)))
+
+6.
+splitList               splitList(l)
+DEFINISI DAN SPESIFIKASI
+splitList   : List of Integer -> (List of Integer, List of Integer)
+    {splitList(l) menghasilkan 2 List of Integer, list pertama memuat bil positif dan 0 yang
+     merupakan elemen dari l (dengan urutan kemunculan yang tidak berubah), sedangkan
+     list kedua memuat bilangan negatif elemen l. prekondisi l mungkin kosong}
+REALISASI
+    if (isEmpty(l)) then ([], [])   {basis}
+    else
+        let (l1, l2) = splitList(Tail(l))
+        in
+            if (firstElmt(l) >= 0) then (konso(firstElmt(l), l1), l2)
+            else (l1, konso(firstElmt(l), l2))
+
+
+
+
+
+
+
+
+
+1.
+isUnique                isUnique(Teks)
+DEFINISI DAN SPESIFIKASI
+isUnique    : Teks -> Boolean
+    {isUnique(Lc) menghasilkan true jika Lc adalah list
+     dengan elemen unik, yaitu tidak ada elemen pada Lc
+     yang muncul lebih dari 1 kali}
+REALISASI
+    isUnique(Lc) :
+        if (null Lc) then true {basis}
+        else if (isMember(firstElmt(Lc),(Tail(Lc)))) then true {rekurens}
+            else (isUnique(Tail(Lc)))
+        
+        {asumsi isMember bisa menerim elemen selain integer}
+
+posOfX                  posOfX(e, Lc)
+DEFINISI DAN SPESIFIKASI
+posOfX      : Character, Teks -> Boolean
+    {posOfX(e, lc) menghasilkan sebuah bilangan integer
+     yang menyatakan posisi e pada List of Character Lc.
+     Jika e bukan elemen dari Lc, fungsi akan menghasilkan 0
+     prekondisi: Lc memiliki elemen unik}
+REALISASI
+    posOfX(e, Lc) :
+        if (null(Lc)) then 0 {basis}
+        else if (e == firstElmt(lc)) then 1 {basis}
+        else
+            let pos = posOfX(e, Tail(Lc)) {rekurens}
+            in
+                if pos == 0 then 0
+                else 1 + pos
+
+splitAlternate          splitAlternate(L)
+DEFINISI DAN SPESIFIKASI
+splitAlternate  : Teks -> <Teks, Teks>
+    {splitAlternate(L) menghasilkan dua buah liast, misalnya
+     L1 dan L2. L1 berisi semua elemen L pada posisi ganjil,
+     L2 berisi semua elemen L pada posisi genap.}
+REALISASI
+    splitAlternate(L) :
+        if (null L) then ([], []) {basis}
+        else if (null (Tail(L))) then ([firstElmt(L)], []) {rekurens}
+        else
+            let (L1, L2) = splitAlternate(Tail(Tail(L)))
+            in
+                (konso(firstElmt(L), l1), konso(firstElmt(Tail(L)), L2))
+
+            {asumsi konso() bisa menerima elemen selain integer}
