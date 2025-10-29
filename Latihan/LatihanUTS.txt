@@ -1,0 +1,8 @@
+makeListPos(P) :
+    if (isEmptyTree(p)) then []
+    else
+        if (Akar(p) > 0) then
+            konkat( konso(Akar(p),MakeListPos(Left(p))), makeListPos(right(p)) )
+        else
+            konkat( makeListPos(Left(p)), makeListPos(right p))
+
