@@ -17,6 +17,24 @@ void printList(List l, int startIdx) {
     }
 }
 
+int minList(List l, int *startIdx) {
+    int minRest;
+    if (*startIdx == l.nEff-1) {
+        return l.contents[*startIdx];
+    } else {
+        *startIdx = *startIdx + 1;
+        minRest = minList(l, startIdx);
+        *startIdx = *startIdx - 1;
+        
+        if (l.contents[*startIdx] < minRest) {
+            return l.contents[*startIdx];
+        } else {
+            return minRest;
+        }
+    }
+}
+
+
 /**
  * _____________________________________________________________________
  */
@@ -65,6 +83,9 @@ int main() {
     l.contents[2] = 30;
     l.contents[3] = 40;
     l.contents[4] = 50;
+
+    int startIdx = 0;
+    printf("%d\n", minList(l, &startIdx));
 
     printf("Isi list: ");
     printList(l, 0); // start dari idx 0

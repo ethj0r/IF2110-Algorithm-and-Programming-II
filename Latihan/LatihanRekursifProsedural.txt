@@ -1,0 +1,65 @@
+
+1.
+function minList(l: List, tartIdx: integer) -> integer
+{ Mengirimkan nilai minimum pada list l dari indeks startIdx sampai l.nEff-1 }
+{ Prekondisi: l terdefinisi, startIdx >= 0, startIdx < l.nEff }
+
+KAMUS LOKAL
+    minRest: integer
+
+ALGORITMA
+    if (startIdx = l.nEff - 1) then { basis: hanya 1 elemen }
+        -> l.contents[startIdx]
+    else { rekurens }
+        minRest ← minList(l, startIdx + 1)
+        if (l.contents[startIdx] < minRest) then
+            -> l.contents[startIdx]
+        else
+            -> minRest
+
+
+2.
+procedure searchX(input l: List, input x: ElTuype, input startIdx: integer, output idxUndef: integer, output found: boolean)
+{ I.S. l terdefinisi, startIdx >= 0 }
+{ F.S. found = true jika x found, idxUndef berisi indeks x;
+       found = false jika x tidak found, idxUndef = IDX_UNDEF }
+
+KAMUS LOKAL
+
+ALGORITMA
+    if (startIdx >= l.nEff) then { basis: sudah sampai akhir }
+        found <- false
+        idxUndef <- IDX_UNDEF
+    else { rekurens }
+        if (l.contents[startIdx] = x) then
+            found <- true
+            idxUndef <- startIdx
+        else
+            searchX(l, x, startIdx+1, idxUndef, found)
+
+3.
+procedure add1st(input/output l : List, input x: ElType, input idxMax: integer)
+{ I.S. l terdefinisi, l.nEff < CAPACITY, idxMax >= 0 }
+{ F.S. x ditambahkan di awal list (indeks 0), semua elemen list bergeser1 posisi.
+       jika l.nEff = idxMax, x tidak ditambahkan karena tidak ada tempat }
+{ Kasus khusus: jika l.nEff = idxMax, x tidk dtemukan }
+
+KAMUS LOKAL
+
+ALGORITMA
+    if (l.nEff = idxMax) then { basis: list penuh }
+        {do nothing, ga ngapa ngapain karena tidak ada tempat}
+    else
+        if (l.nEff = 0) then { basis: list kosong}
+            l.contents[0] <- x
+            l.nEff <- l.nEff + 1
+        else { rekurens }
+            add1st(l, l.contentsp[l.nEff-1], idxMax)
+            l.contents[l.nEff-1] <- l.contents[l.nEff-2]
+            if (l.nEff = 1) then
+                l.contents[0] <- x
+            l.nEff <- l.nEff + 1
+
+
+
+
