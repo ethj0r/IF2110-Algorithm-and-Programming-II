@@ -34,6 +34,17 @@ int minList(List l, int *startIdx) {
     }
 }
 
+int mini(List l) {
+    List tail;
+    int m;
+
+    if (l.nEff == 1) {
+        l.contents[0];
+    } else {
+        
+    }
+}
+
 
 /**
  * _____________________________________________________________________
