@@ -1,0 +1,34 @@
+procedure start
+{ Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
+Karakter pertama yang ada pada pita posisinya adalah pada
+jendela
+I.S.: sembarang
+F.S.: cc adalah karakter pertama pada pita
+Jika cc ≠ MARK maka eop akan padam (false)
+Jika cc = MARK maka eop akan menyala (true) }
+
+
+procedure adv
+{ Pita dimajukan satu karakter.
+I.S.: Karakter pada jendela = cc, cc ≠ MARK
+F.S.: cc adalah karakter berikutnya dari cc yang lama,
+cc mungkin = MARK
+Jika cc = MARK maka eop akan menyala (true) }
+
+
+Diberikan sebuah mesin karakter dengan pita berisi karakter (mungkin kosong). Buatlah
+algoritma untuk menghitung banyaknya huruf yang ada pada pita tersebut. Banyaknya
+karakter pada pita kosong adalah nol.
+Program CountCharacters
+{ SKEMA PEMROSESAN DENGAN MARK:
+menghitung banyaknya huruf pada pita karakter }
+KAMUS
+    ctr: integer
+ALGORITMA
+    ctr ← 0 { Inisialisasi }
+    start { First Elmt }
+    while (cc ≠ MARK) do { not EOP }
+        ctr ← ctr + 1 { Proses }
+        adv { Next Elmt }
+    { cc = MARK }
+    output(ctr) { Terminasi }
