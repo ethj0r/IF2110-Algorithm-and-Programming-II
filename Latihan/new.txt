@@ -1,0 +1,32 @@
+function countPos(l: List) -> integer
+KAMUS LOKAL
+ALGORITMA
+    if (isEmpty(l)) then {basis 0}
+        -> 0
+    else
+        if (l.info > 0) then 
+            -> 1 + countPos(tail(l))
+        else
+            -> countPos(tail(l))
+
+function sumPos(l: List) -> integer
+KAMUS LOKAL
+ALGORITMA
+    if (isEmpty(l)) then
+        -> 0
+    else
+        if (l.info > 0) then 
+            -> l.info + sumPos(tail(l))
+        else 
+            -> sumPos(tail(l))
+
+function isMember(l: List, x: ElType) -> boolean
+KAMUS LOKAL
+ALGORITMA
+    if (isEmpty(l)) then
+        -> false
+    else
+        if (l.info = x) then
+            -> true
+        else
+            -> isMember(tail(l), x)
